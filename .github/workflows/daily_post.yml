@@ -20,7 +20,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # 2. Ensures credentials are saved
+          persist-credentials: true  # Ensures credentials are saved
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,6 +38,9 @@ jobs:
           PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
           USER_ACCESS_TOKEN: ${{ secrets.USER_ACCESS_TOKEN }}
           IG_ID: ${{ secrets.IG_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
             echo "Running in DRY RUN mode"
@@ -48,7 +51,7 @@ jobs:
           fi
 
       - name: Commit and push updated url.json (if changed)
-        # 3. Expose GITHUB_TOKEN and configure Git
+        # Expose GITHUB_TOKEN and configure Git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
