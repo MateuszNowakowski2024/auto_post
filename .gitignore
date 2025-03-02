@@ -1,0 +1,11 @@
+.env
+test_facebook.ipynb
+test_instagram.ipynb
+test_gen_post.ipynb
+test_main.ipynb
+upload_to_S3.ipynb
+/auto_post_images
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
