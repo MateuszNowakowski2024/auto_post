@@ -1,8 +1,8 @@
 name: Daily Post at 2 PM UTC
 on:
   schedule:
-    - cron: "0 14 * * *"  # Runs daily at 2 PM UTC
-  workflow_dispatch:  # Allows manual trigger with optional dry-run
+    - cron: "0 14 * * *"
+  workflow_dispatch:
     inputs:
       dry_run:
         description: "Run in dry-run mode (no posting to IG/FB)"
@@ -12,10 +12,15 @@ on:
 jobs:
   run-daily-post:
     runs-on: ubuntu-latest
+    # 1. Allow write access so the job can push commits back to the repo
+    permissions:
+      contents: write
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # 2. Ensures credentials are saved
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -43,10 +48,13 @@ jobs:
           fi
 
       - name: Commit and push updated url.json (if changed)
+        # 3. Expose GITHUB_TOKEN and configure Git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add url.json
-          git commit -m "Update url.json" || echo "No changes to commit"
           git pull --rebase origin main
+          git add url.json
+          git commit -m "Update url.json" || echo "No changes to commit"     
           git push
