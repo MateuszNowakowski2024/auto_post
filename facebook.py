@@ -29,8 +29,7 @@ def post_comment(page_post_id, page_access_token):
     """
     post_url = f"https://graph.facebook.com/v22.0/{page_post_id}/comments"
     data = {
-        "message": "Visit Our Website 👆",
-        "link": "https://lily10coloringbooks.fun",  # hardcoded link
+        "message": "Visit Our Website 👉 https://lily10coloringbooks.fun",
         "access_token": page_access_token
     }
     r = requests.post(post_url, json=data)

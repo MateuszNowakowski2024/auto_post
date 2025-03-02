@@ -104,6 +104,7 @@ def generate_instagram_post(book_name, filename):
             "The post should be creative, include relevant hashtags and emojis, and advertise the book "
             "as a perfect coloring book for the youngest artists. Do not use the word 'kid' in the description. "
             "Also, ask followers to comment on what book theme they'd like to see next."
+            "Encourage users to visit our website lily10coloringbooks.fun Link in the Bio!"
             "include #lily_one_zero in the hashtags"
         )
     else:
@@ -111,6 +112,7 @@ def generate_instagram_post(book_name, filename):
             f"Create an engaging Instagram post to advertise a coloring book named '{book_name}'. "
             "The post should be creative, include relevant hashtags and emojis, advise users to visit our website (link in Bio and Comments), "
             "mention that the book is available on Amazon now, and ask followers to comment on what book theme they'd like to see next."
+            "Encourage users to visit our website lily10coloringbooks.fun Link in the Bio!"
             "include #lily_one_zero in the hashtags"
         )
     
