@@ -1,7 +1,9 @@
 .env
+gen_post.py
 test_facebook.ipynb
 test_instagram.ipynb
 test_gen_post.ipynb
+test_gen_post_page.ipynb
 test_main.ipynb
 upload_to_S3.ipynb
 /auto_post_images

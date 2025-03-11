@@ -1,5 +1,5 @@
 import time
-import gen_post
+import gen_post_page
 import instagram
 import facebook
 import argparse
@@ -7,7 +7,7 @@ import argparse
 
 def main(dry_run=False):
     # 1. Generate the Instagram post content (caption) and image URL
-    post, image_url = gen_post.main()
+    post, image_url = gen_post_page.main()
     
     print("\nGenerated Post Content:")
     print(post)
