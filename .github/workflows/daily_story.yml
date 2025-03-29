@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install boto3 moviepy==2.0.0.dev2 opencv-python numpy Pillow python-dotenv requests
+          pip install boto3 moviepy==2.0.0.dev2 opencv-python numpy Pillow requests
 
       - name: Run main_story.py with or without dry-run
         env:
