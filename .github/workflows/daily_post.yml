@@ -31,7 +31,7 @@ jobs:
         run: |
           pip install openai boto3 requests
 
-      - name: Run main.py with or without dry-run
+      - name: Run main_photo.py with or without dry-run
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PAGE_ID: ${{ secrets.PAGE_ID }}
@@ -44,10 +44,10 @@ jobs:
         run: |
           if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
             echo "Running in DRY RUN mode"
-            python main.py --dry-run
+            python main_photo.py --dry-run
           else
             echo "Running normally"
-            python main.py
+            python main_photo.py
           fi
 
       - name: Commit and push updated url.json (if changed)
