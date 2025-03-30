@@ -14,7 +14,7 @@ S3_VIDEO_KEY = "videos/columns_v1.mp4"
 
 # Automatically get the base directory of the project
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FILE = os.path.join(BASE_DIR, "auto_post_reels", ".temp", "temp_video.mp4")
+OUTPUT_FILE = os.path.join(BASE_DIR, "auto_post_reels", "temp", "temp_video.mp4")
 AUDIO_PATH = os.path.join(BASE_DIR, "auto_post_reels", "reel_sounds")
 FONT_PATH = os.path.join(BASE_DIR, "auto_post_reels", "reel_fonts", "SuperCaramel-5yBza.ttf")
 
