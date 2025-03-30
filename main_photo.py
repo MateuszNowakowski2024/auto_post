@@ -1,7 +1,7 @@
 import time
 import argparse
-from modules import gen_post_page, ig, fb
-
+from modules import ig, fb
+from modules import gen_post_page
 
 def main(dry_run=False):
     # 1. Generate the Instagram post content (caption) and image URL
