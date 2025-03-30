@@ -1,7 +1,9 @@
 import os
 import argparse
 from config import *
-from modules import SlideshowGenerator, FacebookStory, InstaStory
+from modules.generator import SlideshowGenerator  
+from modules.facebook_story import FacebookStory
+from modules.insta_story import InstaStory
 # from dotenv import load_dotenv
 # load_dotenv()
 
