@@ -1,11 +1,13 @@
 import os
+import argparse
 from config import *
 from modules import SlideshowGenerator, FacebookStory, InstaStory
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
-def main():
-    # Generate video using your SlideshowGenerator
+
+def main(dry_run=False):
+    # Generate video using SlideshowGenerator
     generator = SlideshowGenerator(
         WIDTH, HEIGHT, SPEED, QUALITY, TEXT_CONFIGS, AUDIO_PATH,
         FOLDER1, FOLDER2, OUTPUT_FILE, RANDOM_CHOICE, OPPOSITE,
@@ -18,6 +20,12 @@ def main():
     print(f"Mode: {MODE}, Opposite: {OPPOSITE}, URL: {video_url}")
 
     caption = "Happy Coloring! Check us out: lily10coloringbooks.fun"
+
+    if dry_run:
+        print("\n[DRY RUN] Skipping actual posting to Instagram and Facebook stories and reels.")
+        print("Generated caption:", caption)
+        print("Generated video URL:", video_url)
+        return
 
     # Initialize publishers
     ig = InstaStory()
@@ -53,5 +61,10 @@ def main():
     else:
         print("Instagram Reel failed")
 
+
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Run the story and reel posting workflow.")
+    parser.add_argument("--dry-run", action="store_true", help="Run the workflow without posting to IG and FB")
+    args = parser.parse_args()
+
+    main(dry_run=args.dry_run)
