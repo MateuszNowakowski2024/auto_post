@@ -1,133 +1,162 @@
-# **Social Media Auto-Poster**  
+# 🎨 Social Media Auto-Poster
 
-This repository contains a **Python-based automation script** that generates and posts content to **Instagram and Facebook**. The script selects a random coloring book cover image from an **S3 bucket**, generates a caption using **OpenAI GPT**, and posts it to social media.  
+This repository contains a Python-based automation tool designed to simplify the creation and posting of content to Instagram and Facebook. The script selects images from an S3 bucket, generates captions using OpenAI GPT, and can now also generate engaging slideshow videos for Instagram and Facebook Stories/Reels.
 
----
+## 🚀 Features
 
-## **Features**
-- ✅ **Automated Post Generation**: Uses OpenAI GPT to generate engaging captions.  
-- 🖼️ **S3 Image Selection**: Selects a new, unused image from an S3 bucket.  
-- 📸 **Instagram Posting**: Uploads the image and caption to Instagram via the Graph API.  
-- 🏷️ **Facebook Posting**: Posts to a Facebook Page with a follow-up comment.  
-- ⚡ **Dry-Run Mode**: Allows testing the workflow without actually posting.  
-- ⏳ **GitHub Actions Support**: Can be scheduled to run automatically.  
+- **Automated Post Generation**  
+    Uses OpenAI GPT to generate engaging and relevant captions automatically.
 
----
+- **Image Selection from AWS S3**  
+    Fetches a random, unused image from a specified S3 bucket.
 
-## **Important Customization Required**
-### **1. Hardcoded Information in Scripts**
-Some parts of the script contain **hardcoded values** that must be adjusted before running:
-- **`gen_post.py`**:
-    - The **OpenAI GPT prompts** for generating captions.
-    - Adjust wording, hashtags, and descriptions as needed.
+- **Story & Reel Slideshow Generator (New)**  
+    - Automatically generates slideshow-style videos optimized for Instagram & Facebook stories/reels.
+    - Supports multiple dynamic layouts (two-row, two-column, four-column).
+    - Adds customizable text overlays to enhance viewer engagement.
+    - Integrates audio tracks for more engaging content.
 
-- **`facebook.py`**:
-    - The **hardcoded website link** in the comment post:
-        ```python
-        "link": "https://lily10coloringbooks.fun"
-        ```
-    - Modify this to your own website or remove it if not needed.
+- **Instagram Posting**  
+    Posts photos or generated videos (stories/reels) directly to Instagram using the Meta Graph API.
 
-### **2. API Keys & Access Tokens**
-The script requires API keys and access tokens for OpenAI, Instagram, and Facebook.
-- **Environment Variables Required**:
-    ```bash
-    export OPENAI_API_KEY="your-openai-key"
-    export USER_ACCESS_TOKEN="your-instagram-token"
-    export IG_ID="your-instagram-id"
-    export PAGE_ID="your-facebook-page-id"
-    export PAGE_ACCESS_TOKEN="your-facebook-token"
-    ```
+- **Facebook Posting**  
+    Posts photos and videos (stories/reels) to a Facebook Page. Automatically adds comments or links post-publication.
 
-💬 Need help acquiring access tokens or IDs? Drop a comment or DM me, and I'll guide you through the process.
+- **Dry-Run Mode**  
+    Allows testing the workflow without publishing to social media.
 
----
+- **GitHub Actions Support**  
+    Automatically schedule and run posting scripts using GitHub Actions workflows.
 
-## **Requirements**
-1. **AWS S3 Bucket for Images**  
-     The project requires an S3 bucket containing images that have public URLs.  
-     This is necessary because Meta's Instagram and Facebook APIs require public image URLs for posting.  
-     Ensure that your S3 bucket allows public access to images.
+## 🔧 Important Customizations Required
 
----
+### 1. Update Hardcoded Information
 
-## **Installation & Setup**
-1. **Clone the Repository**
-     ```bash
-     git clone https://github.com/your-username/your-repo.git
-     cd your-repo
-     ```
+- **gen_post.py:**  
+    Customize OpenAI GPT prompts, hashtags, and post descriptions.
 
-2. **Install Dependencies**
-     ```bash
-     pip install -r requirements.txt
-     ```
+- **facebook.py:**  
+    Update the hardcoded website link:  
+    `"link": "https://lily10coloringbooks.fun"`  
+    Replace with your own URL or remove if unnecessary.
 
-3. **Run the Script**
-     - **Live Mode (posts to Instagram & Facebook)**:
-         ```bash
-         python main.py
-         ```
-     - **Dry-Run Mode (test without posting)**:
-         ```bash
-         python main.py --dry-run
-         ```
+### 2. API Keys & Access Tokens
 
----
+Required environment variables:
 
-## **GitHub Actions Automation**
-The script can be scheduled to run automatically using GitHub Actions.  
-Modify `.github/workflows/posting.yml` to adjust the posting schedule.
+```bash
+export OPENAI_API_KEY="your-openai-key"
+export USER_ACCESS_TOKEN="your-instagram-token"
+export IG_ID="your-instagram-id"
+export PAGE_ID="your-facebook-page-id"
+export PAGE_ACCESS_TOKEN="your-facebook-token"
+export AWS_ACCESS_KEY_ID="your-aws-access-key"
+export AWS_SECRET_ACCESS_KEY="your-aws-secret-key"
+export AWS_REGION="your-aws-region"
+```
 
-Example workflow file (`.github/workflows/posting.yml`):
+### AWS S3 Bucket Setup
+
+Set up an AWS S3 bucket to store your images/videos with public read permissions to ensure compatibility with Instagram and Facebook's requirements for public image URLs.
+
+## ⚙️ Installation & Setup
+
+### Clone Repository
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Script
+
+#### Photo Posting (Instagram/Facebook):
+
+```bash
+python main_photo.py
+```
+
+#### Story/Reel Posting (Instagram/Facebook) (New):
+
+```bash
+python main_story.py
+```
+
+#### Dry-Run Mode:
+
+```bash
+python main_story.py --dry-run
+```
+
+## 📅 GitHub Actions Automation
+
+### 📹 Story/Reel Workflow
+
 ```yaml
-name: Social Media Posting Workflow
+name: Daily Story and Reel
 
 on:
-    workflow_dispatch:  # Allows manual triggering from GitHub Actions UI
     schedule:
-        - cron: '0 12 * * *'  # Runs every day at 12 PM UTC (adjust as needed)
+        - cron: '0 16 * * *'
+    workflow_dispatch:
+        inputs:
+            dry_run:
+                description: "Dry-run mode (no posting)"
+                required: false
+                default: "false"
 
 jobs:
-    post:
+    post-story:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
-                uses: actions/checkout@v3
-
-            - name: Set up Python
-                uses: actions/setup-python@v4
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
                 with:
-                    python-version: '3.9'  # Adjust to match your script's Python version
+                    python-version: '3.11'
+            - run: pip install boto3 moviepy==2.0.0.dev2 opencv-python numpy Pillow requests
 
-            - name: Install dependencies
-                run: pip install -r requirements.txt
-
-            - name: Run the script in DRY RUN mode
-                run: python main.py --dry-run
+            - name: Run Story Posting
+                env:
+                    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+                    PAGE_ID: ${{ secrets.PAGE_ID }}
+                    PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+                    USER_ACCESS_TOKEN: ${{ secrets.USER_ACCESS_TOKEN }}
+                    IG_ID: ${{ secrets.IG_ID }}
+                    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                    AWS_REGION: ${{ secrets.AWS_REGION }}
+                run: |
+                    if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+                        python main_story.py --dry-run
+                    else
+                        python main_story.py
 ```
 
-To enable live posting, modify the last step:
-```yaml
-            - name: Run the script in Live Mode
-                run: python main.py
+## 📂 Project Structure
+
+```plaintext
+.
+├── modules/
+│   ├── generator.py        # Slideshow Generator for stories/reels *(New)*
+│   ├── facebook_photo.py         # Facebook posting functions
+│   ├── insta_story.py      # Instagram Story/Reel functions *(New)*
+│   ├── facebook_story.py   # Facebook Story/Reel functions *(New)*
+│   ├── instagram_photo.py  # Instagram photo posting
+│   ├── gen_post_page.py    # Generates posts
+│   └── s3.py               # S3 interaction utilities
+├── main_photo.py           # Workflow for photo posting
+├── main_story.py           # Workflow for stories/reels *(New)*
+├── requirements.txt        # Python dependencies
+└── README.md               # Documentation
 ```
 
----
+## 📜 License
 
-## **File Structure**
-```
-├── gen_post.py        # Generates image URL and caption
-├── instagram.py       # Posts to Instagram
-├── facebook.py        # Posts to Facebook
-├── main.py            # Orchestrates the workflow
-├── requirements.txt   # Required dependencies
-├── .github/workflows/ # GitHub Actions for automation
-└── README.md          # Project documentation
-```
-
----
-
-## **License**
-This project is licensed under the MIT License.
+Licensed under the MIT License.
