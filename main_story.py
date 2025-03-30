@@ -27,39 +27,39 @@ def main(dry_run=False):
         print("Generated video URL:", video_url)
         return
 
-    # # Initialize publishers
-    # ig = InstaStory()
-    # fb = FacebookStory()
+    # Initialize publishers
+    ig = InstaStory()
+    fb = FacebookStory()
 
-    # # --- Facebook Story ---
-    # fb_story_video_id, fb_story_upload_url = fb.init_story_upload()
-    # if fb.upload_story_video(fb_story_upload_url, video_url):
-    #     success, post_id = fb.publish_story(fb_story_video_id)
-    #     print("Facebook Story published:", success, post_id)
-    # else:
-    #     print("Facebook Story upload failed")
+    # --- Facebook Story ---
+    fb_story_video_id, fb_story_upload_url = fb.init_story_upload()
+    if fb.upload_story_video(fb_story_upload_url, video_url):
+        success, post_id = fb.publish_story(fb_story_video_id)
+        print("Facebook Story published:", success, post_id)
+    else:
+        print("Facebook Story upload failed")
 
-    # # --- Instagram Story ---
-    # insta_story_media_id = ig.publish_story(video_url)
-    # if insta_story_media_id:
-    #     print("Instagram Story published, Media ID:", insta_story_media_id)
-    # else:
-    #     print("Instagram Story failed")
+    # --- Instagram Story ---
+    insta_story_media_id = ig.publish_story(video_url)
+    if insta_story_media_id:
+        print("Instagram Story published, Media ID:", insta_story_media_id)
+    else:
+        print("Instagram Story failed")
 
-    # # --- Facebook Reel ---
-    # fb_reel_video_id, fb_reel_upload_url = fb.init_reel_upload()
-    # if fb.upload_reel_video(fb_reel_upload_url, video_url):
-    #     success, post_id = fb.publish_reel(fb_reel_video_id, caption)
-    #     print("Facebook Reel published:", success, post_id)
-    # else:
-    #     print("Facebook Reel upload failed")
+    # --- Facebook Reel ---
+    fb_reel_video_id, fb_reel_upload_url = fb.init_reel_upload()
+    if fb.upload_reel_video(fb_reel_upload_url, video_url):
+        success, post_id = fb.publish_reel(fb_reel_video_id, caption)
+        print("Facebook Reel published:", success, post_id)
+    else:
+        print("Facebook Reel upload failed")
 
-    # # --- Instagram Reel ---
-    # insta_reel_media_id = ig.publish_reel(video_url, caption)
-    # if insta_reel_media_id:
-    #     print("Instagram Reel published, Media ID:", insta_reel_media_id)
-    # else:
-    #     print("Instagram Reel failed")
+    # --- Instagram Reel ---
+    insta_reel_media_id = ig.publish_reel(video_url, caption)
+    if insta_reel_media_id:
+        print("Instagram Reel published, Media ID:", insta_reel_media_id)
+    else:
+        print("Instagram Reel failed")
 
 
 if __name__ == "__main__":
