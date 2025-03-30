@@ -42,5 +42,5 @@ jobs:
             python main_story.py --dry-run
           else
             echo "Running normally"
-            python auto_post/main_story.py
+            python main_story.py
           fi
