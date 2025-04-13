@@ -19,6 +19,8 @@ test_gen_reels_2columns.ipynb
 test_gen_reels_4columns_2large.ipynb
 test_gen_reels_4columns.ipynb
 test_gen_reels_1column.ipynb
+test_rows_columns_integration.ipynb
+test_rows_optimized.ipynb
 test.ipynb
 test_create_reel_multirow.py
 test_gen_reels_4rows.ipynb

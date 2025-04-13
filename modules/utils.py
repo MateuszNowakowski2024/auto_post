@@ -19,6 +19,15 @@ def hex_to_rgb(hex_color):
         raise ValueError("Invalid hex color format (must be 6 or 8 digits)")
     return tuple(int(hex_color[i:i+2], 16) for i in range(0, len(hex_color), 2))
 
+def resize_to_height(image, target_height):
+    """Resizes an image to a given height while preserving aspect ratio."""
+    if image is None:
+        return None
+    original_height, original_width = image.shape[:2]
+    scale = target_height / original_height
+    new_width = int(original_width * scale)
+    return cv2.resize(image, (new_width, target_height), interpolation=cv2.INTER_AREA)
+
 def wrap_text(text, font, max_width):
     """Wraps text so that no line exceeds max_width."""
     lines = []
@@ -171,6 +180,17 @@ def build_composite_column(image_list, required_height):
     while composite.shape[0] < required_height:
         next_img = image_list[idx % len(image_list)]
         composite = np.vstack((composite, next_img))
+        idx += 1
+    return composite
+
+def build_composite_strip(image_list, required_width):
+    if not image_list:
+        return None
+    composite = image_list[0]
+    idx = 1
+    while composite.shape[1] < required_width:
+        next_img = image_list[idx % len(image_list)]
+        composite = np.hstack((composite, next_img))
         idx += 1
     return composite
 

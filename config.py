@@ -1,22 +1,19 @@
 import random
-import os
 
 ###############################
 # Parameter Setting
 ###############################
 
-
 # S3 paths
 FOLDER1 = "s3://lily-images/reels/cartoon_images"
 FOLDER2 = "s3://lily-images/reels/outline_images"
 S3_VIDEO_BUCKET = "lily-images"
-S3_VIDEO_KEY = "videos/columns_v1.mp4"
-
-# Automatically get the base directory of the project
-
-OUTPUT_FILE = os.path.abspath("auto_post_reels/temp/temp_video.mp4") # os.path.join(BASE_DIR, "auto_post_reels", "temp", "temp_video.mp4")
-AUDIO_PATH = os.path.abspath("auto_post_reels/reel_sounds") #os.path.join(BASE_DIR, "auto_post_reels", "reel_sounds")
-FONT_PATH = os.path.abspath("auto_post_reels/reel_fonts/SuperCaramel-5yBza.ttf") #os.path.join(BASE_DIR, "auto_post_reels", "reel_fonts", "SuperCaramel-5yBza.ttf")
+S3_VIDEO_KEY = "videos/production_video.mp4"
+SINGLE_SLIDESHOW_FOLDER = "s3://lily-images/pages"
+# Local paths
+OUTPUT_FILE = "auto_post_reels/temp/temp_video.mp4"
+AUDIO_PATH = "auto_post_reels/reel_sounds"
+FONT_PATH = "auto_post_reels/reel_fonts/SuperCaramel-5yBza.ttf"
 
 # Video settings
 WIDTH = 720
@@ -27,7 +24,7 @@ VIDEO_MAX_LENGTH = 20
 DURATION = 40
 TRANSITION_DURATION = 2
 RANDOM_CHOICE = True
-MODE = random.choice(['a', 'b', 'c', 'd'])
+MODE =  random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])
 OPPOSITE = random.choice([True, False])      # set in main randomly
 
 # Text overlay configurations
@@ -55,3 +52,4 @@ TEXT_CONFIGS = [
         'corner_radius': 25
     }
 ]
+
